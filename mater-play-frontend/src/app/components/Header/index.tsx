@@ -1,21 +1,28 @@
-import '';
+import { AppBar, Box, Button, Container, styled, Toolbar, Typography } from "@mui/material"
+
+const MenuButton = styled(Button)({
+    color: '#FFF'
+})
 
 function Header() {
     return (
-        <header>
-            <div className="container">
-                <div className="toolbar">
-                    <h6>Mater Play</h6>
-                    <nav>
-                        <ul>
-                            <li><a href="#">Pênis</a></li>
-                            <li><a href="#">Dick</a></li>
-                            <li><a href="#">Cock</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
+       <AppBar>
+            <Container>
+                <Toolbar>
+                    <Typography variant="h6">
+                        Pênis Play  
+                    </Typography>
+                    <Box
+                        sx={{
+                            paddingLeft: '1rem'
+                        }}>
+                        <MenuButton variant="text">Pênis</MenuButton>
+                        <MenuButton variant="text">Poronga</MenuButton>
+                        <MenuButton variant="text">Cock</MenuButton>
+                    </Box>
+                </Toolbar>
+            </Container>
+       </AppBar>
     )
 }
 
