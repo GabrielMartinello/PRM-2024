@@ -6,7 +6,7 @@ type MovieCardProps = {
 
 function MovieCard({poster}: MovieCardProps) {
     return (
-        <Paper component="a" href="/1" 
+        <Paper component="a" href="/1" elevation={0}
         sx={{
             width: '10rem'
         }}

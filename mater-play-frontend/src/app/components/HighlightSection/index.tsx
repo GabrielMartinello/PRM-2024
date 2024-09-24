@@ -37,7 +37,7 @@ function HighLightSection() {
                         }}
                     >
                             <Button variant="outlined"  >Assistir Big Black Cock</Button>
-                            <Button variant="outlined">Detallhes</Button>
+                            <Button variant="outlined">Detalhes</Button>
                         </Stack>
                     </Stack>
                 </Stack>

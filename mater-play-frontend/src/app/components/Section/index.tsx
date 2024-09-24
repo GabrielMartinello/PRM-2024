@@ -9,12 +9,16 @@ const movies = [
     {poster: 'assets/house-of-dragons-poster.jpg'}
 ];
 
-function Section() {
+type SectionProps= {
+    title : string;
+}
+
+function Section({title}: SectionProps) {
     return (
        <Box>
          <Container>
             <Typography variant="h6" sx={{fontWeight: 400, paddingTop: '2rem'}}>
-                Para toda a família
+                { title }
             </Typography>
             <Stack direction="row" gap={0.5} sx={{ overflowY: 'hidden', whiteSpace: 'nowrap', paddingY: '1rem'}}>
                 {movies.map(p => (

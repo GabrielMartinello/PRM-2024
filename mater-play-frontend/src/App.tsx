@@ -10,9 +10,8 @@ function App() {
         <Header />
         <main style={{marginTop: '8rem'}}>
           <HighLightSection></HighLightSection>
-          <Section>
-
-          </Section>
+          <Section title="Para você"/>
+          <Section title="Para toda a família"/>
         </main>
         <Footer />
     </div>
