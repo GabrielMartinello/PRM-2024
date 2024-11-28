@@ -1,23 +1,25 @@
-import {Paper} from '@mui/material';
+import { Paper } from "@mui/material";
+import { IMovie } from "../../@libs/types";
 
 type MovieCardProps = {
-    poster: string;
+  movie: IMovie
 }
-
-function MovieCard({poster}: MovieCardProps) {
-    return (
-        <Paper component="a" href="/1" elevation={0}
-        sx={{
-            width: '10rem'
+function MovieCard({
+  movie
+}: MovieCardProps) {
+  return (
+    <Paper
+      component="a"
+      elevation={0}
+      href={movie.id}
+    >
+      <img src={`${import.meta.env.VITE_SUPABASE_STORAGE_URL}/${movie.poster}`}
+        style={{
+          width: '180px'
         }}
-        >
-        <img src={poster}
-            style={{
-                width: '100%'
-            }}
-        /> 
-        </Paper>
-    )
+      />
+    </Paper>
+  )
 }
 
-export default MovieCard
+export default MovieCard;

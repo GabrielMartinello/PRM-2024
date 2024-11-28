@@ -1,49 +1,101 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { IMovie } from "../../@libs/types";
+import { MovieService } from "../../services/movie-service";
 
 function HighLightSection() {
-    return (
-        <Box>
-            <Container>
-                <Stack direction="row">
-                    <img src="assets/house-of-dragons-poster.jpg" />
-                    <Stack sx={{
-                        justifyContent: 'center',
-                        paddingLeft: '3rem'
-                    }}>
-                        <Typography variant="h4">A Casa dos Pênizes</Typography>
-                        <Typography variant="subtitle2">
-                            <span style={{
-                                borderWidth: '1px',
-                                borderStyle: 'solid',
-                                padding: '0.2rem',
-                                marginRight: '0.3rem'
-                                
-                            }}>
-                                16
-                            </span>
-                            Aventura, Fantasia, Ação
-                        </Typography>
-                        <Typography variant="subtitle1" sx={{
-                            paddingTop: '2rem',
-                            marginBottom: '0.5rem'
-                        }}>
-                            Sinopse
-                        </Typography>
-                        <Typography variant="body2">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde totam facilis eos, harum exercitationem distinctio ullam iure ad quos rem quas nostrum est amet necessitatibus quaerat esse, tenetur veniam minus!
-                        </Typography>
-                        <Stack direction="row" gap={1} sx={{
-                            paddingY: '1rem'
-                        }}
-                    >
-                            <Button variant="outlined"  >Assistir Big Black Cock</Button>
-                            <Button variant="outlined">Detalhes</Button>
-                        </Stack>
-                    </Stack>
-                </Stack>
-            </Container>
-        </Box>
-    )
+
+  const params = useParams();
+
+  const [movie, setMovie] = useState<IMovie>({} as IMovie);
+
+  useEffect(()=>{
+
+    const movieId = (params.id) ? params.id : '5a420a78-8b19-42e5-9dee-1f257ebb5401'
+    
+    MovieService.getMoviesById(movieId)
+      .then(result => {
+        if (result) setMovie(result);
+      })
+      .catch(error => {
+        console.log('PAU: ', error)
+      })
+
+  },[params]);
+
+  return (
+    <Box>
+      <Container>
+        <Stack
+          direction="row"
+        >
+          <img src={`${import.meta.env.VITE_SUPABASE_STORAGE_URL}/${movie.poster}`} />
+          <Stack
+            sx={{
+              justifyContent: 'center',
+              paddingLeft: '3rem'
+            }}
+          >
+            <Typography
+              variant="h4"
+            >
+              {movie.title}
+            </Typography>
+            <Typography
+              variant="subtitle2"
+            >
+              <span
+                style={{
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  padding: '0.2rem',
+                  marginRight: '0.3rem'
+                }}
+              >
+                {movie.ageRating}
+              </span>
+              
+              {movie.genres && movie.genres.map(genre => (genre.name)).join(', ')}
+
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                paddingTop: '2rem',
+                marginBottom: '0.5rem'
+              }}
+            >
+              Sinopse
+            </Typography>
+            <Typography
+              variant="body2"
+            >
+              {movie.description}
+            </Typography>
+            <Stack
+              gap={1}
+              direction="row"
+              sx={{
+                paddingY: '1rem'
+              }}
+            >
+              <Button 
+                variant="outlined"
+              >
+                Assistir
+              </Button>
+              <Button
+                variant="outlined"
+              >
+                Detalhes
+              </Button>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Container>
+    </Box>   
+  )
 }
 
 export default HighLightSection;

@@ -1,33 +1,57 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import {Box, Container, Stack, Typography } from "@mui/material";
 import MovieCard from "../MovieCard";
+import { useEffect, useState } from "react";
+import { ICategory, IMovie } from "../../@libs/types";
+import { MovieService } from "../../services/movie-service";
 
-const movies = [
-    {poster: 'assets/house-of-dragons-poster.jpg'},
-    {poster: 'assets/theBoyss.jpg'},
-    {poster: 'assets/materia-escura.jpg'},
-    {poster: 'assets/house-of-dragons-poster.jpg'},
-    {poster: 'assets/house-of-dragons-poster.jpg'}
-];
 
-type SectionProps= {
-    title : string;
+type SectionProps = {
+  category: ICategory;
+}
+function Section({
+  category
+}: SectionProps) {
+  
+  const [movies, setMovies] = useState<IMovie[]>([]);
+
+  useEffect(() => {
+    
+    if (category.id) {
+      MovieService.getByCategoryId(category.id)
+        .then(result => {
+          setMovies(result)
+        });
+    }
+  }, []);
+  
+  return (
+    <Box>
+      <Container>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 400,
+            paddingTop: '2rem'
+          }}
+        >
+          { category.name }
+        </Typography>
+        <Stack
+          direction="row"
+          gap={1}
+          sx={{
+            overflowY: 'hidden',
+            whiteSpace: 'nowrap',
+            paddingY: '1rem'
+          }}
+        >
+          {movies.map(item => (
+            <MovieCard key={item.id} movie={item} />
+          ))}
+        </Stack>
+      </Container>
+    </Box>
+  )
 }
 
-function Section({title}: SectionProps) {
-    return (
-       <Box>
-         <Container>
-            <Typography variant="h6" sx={{fontWeight: 400, paddingTop: '2rem'}}>
-                { title }
-            </Typography>
-            <Stack direction="row" gap={0.5} sx={{ overflowY: 'hidden', whiteSpace: 'nowrap', paddingY: '1rem'}}>
-                {movies.map(p => (
-                    <MovieCard poster={p.poster}/>
-                ))}
-            </Stack>
-         </Container>
-       </Box>
-    )
-}
-
-export default Section
+export default Section;
